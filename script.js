@@ -41,28 +41,45 @@ onReady()
 
 function arcaneScepterAttack (event) {
     console.log('Arcane Scepter attack!')
+    if (myAP < arcaneScepterStats.apCost){
+        console.log('Not enough AP!')
+    }
+    else if (myAP > arcaneScepterStats.apCost) {myAP -= arcaneScepterStats.apCost;
     shroomHP -= arcaneScepterStats.damage;
-    myAP -= arcaneScepterStats.apCost;
+
     console.log('You dealt 14 damage with your scepter. Enemy has', shroomHP, ' left. You have' , myAP, 'attack points remaining');
-}
+}}
 
 function entangleAttack(event) {
     console.log('Entangling action!')
+    if (myAP < entangleStats.apCost){
+        console.log('Not enough AP! Try something else!')
+    }
+    else if (myAP >= entangleStats.apCost){
     shroomHP -= entangleStats.damage;
     myAP -= entangleStats.apCost;
     console.log('You entangled the enemy! Enemy has ', shroomHP, 'health remaining. You have ', myAP, 'attack points remaining')
-}
+}}
 function dragonBladeAttack(event) {
     console.log('Attacked with the Dragon Blade!')
+    if (myAP < dragonBladeStats.apCost){
+        console.log('You are too tired, try a smaller attack!')
+    }
+    else if (myAP >= dragonBladeStats.apCost){
     shroomHP -= dragonBladeStats.damage;
     myAP -= dragonBladeStats.apCost;
     console.log('You smote the enemy with your Dragon Blade! Enemy has ', shroomHP, 'Remaining. You have ', myAP, 'attack pointsremaining')
-
+    }
 }
 function starFireAttack(event) {
     console.log('Launched Star Fire!')
+    if (myAP < starFireStats.apCost){
+        console.log('Out of AP! Finish them!')
+    }
+    else if (myAP >= starFireStats.apCost){
+    
     shroomHP -= starFireStats.damage;
     myAP -= starFireStats.apCost;
     console.log('You unleased Star Fire! Enemy has ', shroomHP, 'Remaining. You have ', myAP, 'attack points remaining')
-
+    }
 }
