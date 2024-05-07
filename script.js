@@ -8,107 +8,161 @@ let fungusDomHp = document.getElementsByClassName('hp-text')[0];
 let fungusHpValue = Number(fungusDomHp.innerHTML);
 let hpMeterElement = document.getElementById('hp-meter');
 let hpMeterValue = hpMeterElement.value;
+let apMeterElement = document.getElementById('ap-meter');
+let apMeterValue = apMeterElement.value;
+let apText = document.getElementsByClassName('ap-text')[0];
+let apTextValue = apText.value;
 // let shroomHP = document.querySelector('hp-text').innerHTML;
 // let myAP = document.getElementById('ap-meter').innerHTML;
 const arcaneScepterStats = {
-    damage: 14,
-    apCost: 12
-}
+	damage: 14,
+	apCost: 12,
+};
 const entangleStats = {
-    damage: 9,
-    apCost: 23
-}
+	damage: 9,
+	apCost: 23,
+};
 const dragonBladeStats = {
-    damage: 47,
-    apCost: 38
-}
+	damage: 47,
+	apCost: 38,
+};
 const starFireStats = {
-    damage: 25,
-    apCost: 33
-}
+	damage: 25,
+	apCost: 33,
+};
 
 function onReady() {
-    console.log("Ready to go!")
-    
-    // Make sure you check the index.html file! 
-    // There are lots of buttons and things ready for you to hook into here!
-    
-    
-    // 🧠 Remember
-    // - Handle events that ->
-    // - Updates state which is ->
-    // - Rendered to the DOM
+	console.log('Ready to go!');
+
+	// Make sure you check the index.html file!
+	// There are lots of buttons and things ready for you to hook into here!
+
+	// 🧠 Remember
+	// - Handle events that ->
+	// - Updates state which is ->
+	// - Rendered to the DOM
 }
 
-
-onReady()
+onReady();
 
 function arcaneScepterAttack(event) {
-    console.log('Arcane Scepter attack!')
-    if (myAP < arcaneScepterStats.apCost) {
-        console.log('Not enough AP!')
-    } else if (myAP >= arcaneScepterStats.apCost) {
-        myAP -= arcaneScepterStats.apCost;
-        hpMeterValue -= arcaneScepterStats.damage;
-        fungusHpValue -= arcaneScepterStats.damage;
+	console.log('Arcane Scepter attack!');
+	if (myAP < arcaneScepterStats.apCost) {
+		console.log('Not enough AP!');
+	} else if (myAP >= arcaneScepterStats.apCost) {
+		myAP -= arcaneScepterStats.apCost;
+		hpMeterValue -= arcaneScepterStats.damage;
+		fungusHpValue -= arcaneScepterStats.damage;
 
-        // Update the value of the hp-meter progress bar
-        hpMeterElement.value = hpMeterValue;
+		hpMeterElement.value = hpMeterValue;
 
-        // Update the value of the fungus HP text
-        fungusDomHp.innerHTML = fungusHpValue;
+		fungusDomHp.innerHTML = fungusHpValue;
 
-        console.log('You dealt 14 damage with your scepter. Enemy has', hpMeterValue, ' left. You have', myAP, 'attack points remaining');
-    }
+		apText.innerHTML = myAP;
+
+		console.log(
+			'You dealt 14 damage with your scepter. Enemy has',
+			hpMeterValue,
+			' left. You have',
+			myAP,
+			'attack points remaining'
+		);
+	} 
+    outOfAp()
+    enemyDefeated()
 }
-
 function entangleAttack(event) {
-    console.log('Entangling action!')
-    if (myAP < entangleStats.apCost) {
-        console.log('Not enough AP!')
-    } else if (myAP >= entangleStats.apCost) {
-        myAP -= entangleStats.apCost;
-        hpMeterValue -= entangleStats.damage;
-        fungusHpValue -= entangleStats.damage;
+	console.log('Entangling action!');
+	if (myAP < entangleStats.apCost) {
+		console.log('Not enough AP!');
+	} else if (myAP >= entangleStats.apCost) {
+		myAP -= entangleStats.apCost;
+		hpMeterValue -= entangleStats.damage;
+		fungusHpValue -= entangleStats.damage;
 
-        // Update the value of the hp-meter progress bar
-        hpMeterElement.value = hpMeterValue;
+		hpMeterElement.value = hpMeterValue;
 
-        // Update the value of the fungus HP text
-        fungusDomHp.innerHTML = fungusHpValue;
-    console.log('You entangled the enemy! Enemy has ', hpMeterValue, 'health remaining. You have ', myAP, 'attack points remaining')
-}}
+		fungusDomHp.innerHTML = fungusHpValue;
+
+		apText.innerHTML = myAP;
+
+		console.log(
+			'You entangled the enemy for 14 damage! Enemy has',
+			hpMeterValue,
+			' left. You have',
+			myAP,
+			'attack points remaining'
+		);
+	} enemyDefeated()
+    outOfAp()
+}
 function dragonBladeAttack(event) {
-    console.log('Attacked with the Dragon Blade!')
-    if (myAP < dragonBladeStats.apCost) {
-        console.log('Not enough AP!')
-    } else if (myAP >= dragonBladeStats.apCost) {
-        myAP -= dragonBladeStats.apCost;
-        hpMeterValue -= dragonBladeStats.damage;
-        fungusHpValue -= dragonBladeStats.damage;
+	console.log('Attacked with the Dragon Blade!');
+	if (myAP < dragonBladeStats.apCost) {
+		console.log('Not enough AP!');
+	} else if (myAP >= dragonBladeStats.apCost) {
+		myAP -= dragonBladeStats.apCost;
+		hpMeterValue -= dragonBladeStats.damage;
+		fungusHpValue -= dragonBladeStats.damage;
 
-        // Update the value of the hp-meter progress bar
-        hpMeterElement.value = hpMeterValue;
+		hpMeterElement.value = hpMeterValue;
 
-        // Update the value of the fungus HP text
-        fungusDomHp.innerHTML = fungusHpValue;
-    console.log('You smote the enemy with your Dragon Blade! Enemy has ', hpMeterValue, 'Remaining. You have ', myAP, 'attack pointsremaining')
-    }
+		fungusDomHp.innerHTML = fungusHpValue;
+
+		apText.innerHTML = myAP;
+
+		console.log(
+			'You swing the Dragon Blade overhead! Enemy receives 47 damage. Enemy has',
+			hpMeterValue,
+			' left. You have',
+			myAP,
+			'attack points remaining'
+		);
+	} enemyDefeated()
+    outOfAp()
 }
 function starFireAttack(event) {
-    console.log('Launched Star Fire!')
-    if (myAP < arcaneScepterStats.apCost) {
-        console.log('Not enough AP!')
-    } else if (myAP >= starFireStats.apCost) {
-        myAP -= starFireStats.apCost;
-        hpMeterValue -= starFireStats.damage;
-        fungusHpValue -= starFireStats.damage;
+	console.log('Launched Star Fire!');
+	if (myAP < starFireStats.apCost) {
+		console.log('Not enough AP!');
+	} else if (myAP >= starFireStats.apCost) {
+		myAP -= starFireStats.apCost;
+		hpMeterValue -= starFireStats.damage;
+		fungusHpValue -= starFireStats.damage;
 
-        // Update the value of the hp-meter progress bar
-        hpMeterElement.value = hpMeterValue;
+		hpMeterElement.value = hpMeterValue;
 
-        // Update the value of the fungus HP text
-        fungusDomHp.innerHTML = fungusHpValue;
-    console.log('You unleased Star Fire! Enemy has ', hpMeterValue, 'Remaining. You have ', myAP, 'attack points remaining')
+		fungusDomHp.innerHTML = fungusHpValue;
+
+		apText.innerHTML = myAP;
+
+		console.log(
+			'You swing the Dragon Blade overhead! Enemy receives 47 damage. Enemy has',
+			hpMeterValue,
+			' left. You have',
+			myAP,
+			'attack points remaining'
+		);
+	} enemyDefeated()
+    outOfAp()
+}
+
+function enemyDefeated() {
+    let fungusElement = document.querySelector('.freaky-fungus');
+    if (fungusHpValue <= 0){
+        fungusElement.classList.remove('walk');
+        fungusElement.classList.add('dead');
+        console.log('You have slain the monster! Congratulations!')
+    }
+}
+
+function outOfAp() {
+    let fungusElement = document.querySelector('.freaky-fungus');
+    let disableButton = document.querySelector('attack-btn');
+    if (myAP <= 0){
+        fungusElement.classList.remove('walk');
+        fungusElement.classList.add('jump');
+        disableButton.classList.add('disabled')
+        console.log('Sadly you have failed, humanity suffers greatly');
     }
 }
