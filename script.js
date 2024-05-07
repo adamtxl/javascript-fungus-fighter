@@ -73,6 +73,11 @@ function arcaneScepterAttack(event) {
 			'attack points remaining'
 		);
 	} 
+    if (hpMeterElement.value < 50) {
+        setInterval(function () {fungusHpValue.innerHTML ++}, 1000);
+        setInterval(function () {hpMeterElement.innerHTML ++}, 1000);
+        setInterval(function () {fungusDomHp.innerHTML ++}, 1000);
+        }
     outOfAp()
     enemyDefeated()
 }
@@ -98,7 +103,13 @@ function entangleAttack(event) {
 			myAP,
 			'attack points remaining'
 		);
-	} enemyDefeated()
+	} 
+    if (hpMeterElement.value < 50) {
+        setInterval(function () {fungusHpValue.innerHTML ++}, 1000);
+        setInterval(function () {hpMeterElement.innerHTML ++}, 1000);
+        setInterval(function () {fungusDomHp.innerHTML ++}, 1000);
+        }
+    enemyDefeated()
     outOfAp()
 }
 function dragonBladeAttack(event) {
@@ -123,8 +134,14 @@ function dragonBladeAttack(event) {
 			myAP,
 			'attack points remaining'
 		);
-	} enemyDefeated()
+	} 
+    enemyDefeated()
     outOfAp()
+    if (hpMeterElement.value < 50) {
+        setInterval(function () {fungusHpValue.innerHTML ++}, 1000);
+        setInterval(function () {hpMeterElement.innerHTML ++}, 1000);
+        setInterval(function () {fungusDomHp.innerHTML ++}, 1000);
+        }
 }
 function starFireAttack(event) {
     console.log('Launched Star Fire!');
@@ -148,10 +165,16 @@ function starFireAttack(event) {
             myAP,
             'attack points remaining'
         );
-
-        // Call functions to handle special cases
+        // if (fungusHpValue < 50) {
+        //     hpRestored;
+        // }
         enemyDefeated();
         outOfAp();
+        if (hpMeterElement.value < 50) {
+        setInterval(function () {fungusHpValue.innerHTML ++}, 1000);
+        setInterval(function () {hpMeterElement.innerHTML ++}, 1000);
+        setInterval(function () {fungusDomHp.innerHTML ++}, 1000);
+        }
     }
 }
 
@@ -174,4 +197,10 @@ function outOfAp() {
         fungusElement.classList.add('jump');        
         console.log('Sadly you have failed, humanity suffers greatly');
     }
+}
+const hpRestored = setInterval(regenHp, 1000)
+function regenHp() {
+if (fungusHpValue < 50) {
+   fungusHpValue++
+}
 }
