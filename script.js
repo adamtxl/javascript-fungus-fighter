@@ -61,7 +61,7 @@ function arcaneScepterAttack(event) {
         apMeterValue -= arcaneScepterStats.apCost;
 		hpMeterElement.value = hpMeterValue;
 		fungusDomHp.innerHTML = fungusHpValue;
-        apMeterElement.innerHTML = myAP;
+        apMeterElement.value = myAP;
         apText.innerHTML = myAP;
         apMeterValue = myAP;
 
@@ -86,13 +86,11 @@ function entangleAttack(event) {
 		myAP -= entangleStats.apCost;
 		hpMeterValue -= entangleStats.damage;
 		fungusHpValue -= entangleStats.damage;
-
-		hpMeterElement.value = hpMeterValue;
-
+        hpMeterElement.value = hpMeterValue;
 		fungusDomHp.innerHTML = fungusHpValue;
-
-		apText.innerHTML = myAP;
-
+        apMeterElement.value = myAP;
+        apText.innerHTML = myAP;
+        apMeterValue = myAP;
 		console.log(
 			'You entangled the enemy for 14 damage! Enemy has',
 			hpMeterValue,
@@ -113,13 +111,11 @@ function dragonBladeAttack(event) {
 		myAP -= dragonBladeStats.apCost;
 		hpMeterValue -= dragonBladeStats.damage;
 		fungusHpValue -= dragonBladeStats.damage;
-
-		hpMeterElement.value = hpMeterValue;
-
+        hpMeterElement.value = hpMeterValue;
 		fungusDomHp.innerHTML = fungusHpValue;
-
-		apText.innerHTML = myAP;
-
+        apMeterElement.value = myAP;
+        apText.innerHTML = myAP;
+        apMeterValue = myAP;
 		console.log(
 			'You swing the Dragon Blade overhead! Enemy receives 47 damage. Enemy has',
 			hpMeterValue,
@@ -140,19 +136,11 @@ function starFireAttack(event) {
         myAP -= starFireStats.apCost;
         hpMeterValue -= starFireStats.damage;
         fungusHpValue -= starFireStats.damage;
-        
-        // Ensure health doesn't go below 0
-        if (hpMeterValue < 0) {
-            hpMeterElement.value = 0;
-            fungusDomHp.innerHTML = 0;
-        } else {
-            hpMeterElement.value = hpMeterValue;
-            fungusDomHp.innerHTML = fungusHpValue;
-        }
-
-        // Update AP text
+        hpMeterElement.value = hpMeterValue;
+		fungusDomHp.innerHTML = fungusHpValue;
+        apMeterElement.value = myAP;
         apText.innerHTML = myAP;
-
+        apMeterValue = myAP;
         console.log(
             'You unleashed Star Fire! Enemy has',
             hpMeterValue,
@@ -181,7 +169,7 @@ function enemyDefeated() {
 
 function outOfAp() {
     let fungusElement = document.querySelector('.freaky-fungus');
-    if (myAP < 1 || disabledButton === 4){
+    if (myAP < 0 || disabledButton === 4){
         fungusElement.classList.remove('walk');
         fungusElement.classList.add('jump');        
         console.log('Sadly you have failed, humanity suffers greatly');
