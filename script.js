@@ -4,6 +4,10 @@
 // let fungusHP = 100;
 let shroomHP = 100;
 let myAP = 100;
+let fungusDomHp = document.getElementsByClassName('hp-text')[0];
+let fungusHpValue = Number(fungusDomHp.innerHTML);
+let hpMeterElement = document.getElementById('hp-meter');
+let hpMeterValue = hpMeterElement.value;
 // let shroomHP = document.querySelector('hp-text').innerHTML;
 // let myAP = document.getElementById('ap-meter').innerHTML;
 const arcaneScepterStats = {
@@ -39,47 +43,72 @@ function onReady() {
 
 onReady()
 
-function arcaneScepterAttack (event) {
+function arcaneScepterAttack(event) {
     console.log('Arcane Scepter attack!')
-    if (myAP < arcaneScepterStats.apCost){
+    if (myAP < arcaneScepterStats.apCost) {
         console.log('Not enough AP!')
-    }
-    else if (myAP > arcaneScepterStats.apCost) {myAP -= arcaneScepterStats.apCost;
-    shroomHP -= arcaneScepterStats.damage;
+    } else if (myAP >= arcaneScepterStats.apCost) {
+        myAP -= arcaneScepterStats.apCost;
+        hpMeterValue -= arcaneScepterStats.damage;
+        fungusHpValue -= arcaneScepterStats.damage;
 
-    console.log('You dealt 14 damage with your scepter. Enemy has', shroomHP, ' left. You have' , myAP, 'attack points remaining');
-}}
+        // Update the value of the hp-meter progress bar
+        hpMeterElement.value = hpMeterValue;
+
+        // Update the value of the fungus HP text
+        fungusDomHp.innerHTML = fungusHpValue;
+
+        console.log('You dealt 14 damage with your scepter. Enemy has', hpMeterValue, ' left. You have', myAP, 'attack points remaining');
+    }
+}
 
 function entangleAttack(event) {
     console.log('Entangling action!')
-    if (myAP < entangleStats.apCost){
-        console.log('Not enough AP! Try something else!')
-    }
-    else if (myAP >= entangleStats.apCost){
-    shroomHP -= entangleStats.damage;
-    myAP -= entangleStats.apCost;
-    console.log('You entangled the enemy! Enemy has ', shroomHP, 'health remaining. You have ', myAP, 'attack points remaining')
+    if (myAP < entangleStats.apCost) {
+        console.log('Not enough AP!')
+    } else if (myAP >= entangleStats.apCost) {
+        myAP -= entangleStats.apCost;
+        hpMeterValue -= entangleStats.damage;
+        fungusHpValue -= entangleStats.damage;
+
+        // Update the value of the hp-meter progress bar
+        hpMeterElement.value = hpMeterValue;
+
+        // Update the value of the fungus HP text
+        fungusDomHp.innerHTML = fungusHpValue;
+    console.log('You entangled the enemy! Enemy has ', hpMeterValue, 'health remaining. You have ', myAP, 'attack points remaining')
 }}
 function dragonBladeAttack(event) {
     console.log('Attacked with the Dragon Blade!')
-    if (myAP < dragonBladeStats.apCost){
-        console.log('You are too tired, try a smaller attack!')
-    }
-    else if (myAP >= dragonBladeStats.apCost){
-    shroomHP -= dragonBladeStats.damage;
-    myAP -= dragonBladeStats.apCost;
-    console.log('You smote the enemy with your Dragon Blade! Enemy has ', shroomHP, 'Remaining. You have ', myAP, 'attack pointsremaining')
+    if (myAP < dragonBladeStats.apCost) {
+        console.log('Not enough AP!')
+    } else if (myAP >= dragonBladeStats.apCost) {
+        myAP -= dragonBladeStats.apCost;
+        hpMeterValue -= dragonBladeStats.damage;
+        fungusHpValue -= dragonBladeStats.damage;
+
+        // Update the value of the hp-meter progress bar
+        hpMeterElement.value = hpMeterValue;
+
+        // Update the value of the fungus HP text
+        fungusDomHp.innerHTML = fungusHpValue;
+    console.log('You smote the enemy with your Dragon Blade! Enemy has ', hpMeterValue, 'Remaining. You have ', myAP, 'attack pointsremaining')
     }
 }
 function starFireAttack(event) {
     console.log('Launched Star Fire!')
-    if (myAP < starFireStats.apCost){
-        console.log('Out of AP! Finish them!')
-    }
-    else if (myAP >= starFireStats.apCost){
-    
-    shroomHP -= starFireStats.damage;
-    myAP -= starFireStats.apCost;
-    console.log('You unleased Star Fire! Enemy has ', shroomHP, 'Remaining. You have ', myAP, 'attack points remaining')
+    if (myAP < arcaneScepterStats.apCost) {
+        console.log('Not enough AP!')
+    } else if (myAP >= starFireStats.apCost) {
+        myAP -= starFireStats.apCost;
+        hpMeterValue -= starFireStats.damage;
+        fungusHpValue -= starFireStats.damage;
+
+        // Update the value of the hp-meter progress bar
+        hpMeterElement.value = hpMeterValue;
+
+        // Update the value of the fungus HP text
+        fungusDomHp.innerHTML = fungusHpValue;
+    console.log('You unleased Star Fire! Enemy has ', hpMeterValue, 'Remaining. You have ', myAP, 'attack points remaining')
     }
 }
