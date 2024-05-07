@@ -54,9 +54,11 @@ function arcaneScepterAttack(event) {
 		console.log('Not enough AP!');
 	} else if (myAP >= arcaneScepterStats.apCost) {
 		myAP -= arcaneScepterStats.apCost;
-		hpMeterValue -= arcaneScepterStats.damage;
-		fungusHpValue -= arcaneScepterStats.damage;
-        apMeterValue -= arcaneScepterStats.damage;
+            hpMeterValue -= arcaneScepterStats.damage;
+		    fungusHpValue -= arcaneScepterStats.damage;
+        
+    
+        apMeterValue -= arcaneScepterStats.apCost;
 		hpMeterElement.value = hpMeterValue;
 		fungusDomHp.innerHTML = fungusHpValue;
         apMeterElement.innerHTML = myAP;
@@ -167,18 +169,19 @@ function starFireAttack(event) {
 
 function enemyDefeated() {
     let fungusElement = document.querySelector('.freaky-fungus');
-    if (fungusHpValue <= 0){
+    if (fungusHpValue <= 0) {
         fungusHpValue = 0;
-        fungusElement.innerHTML = 0;
+        hpMeterElement.value = 0; 
+        fungusDomHp.innerHTML = 0; 
         fungusElement.classList.remove('walk');
         fungusElement.classList.add('dead');
-        console.log('You have slain the monster! Congratulations!')
+        console.log('You have slain the monster! Congratulations!');
     }
 }
 
 function outOfAp() {
     let fungusElement = document.querySelector('.freaky-fungus');
-    if (myAP < 8 || disabledButton === 4){
+    if (myAP < 1 || disabledButton === 4){
         fungusElement.classList.remove('walk');
         fungusElement.classList.add('jump');        
         console.log('Sadly you have failed, humanity suffers greatly');
