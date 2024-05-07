@@ -12,6 +12,7 @@ let apMeterElement = document.getElementById('ap-meter');
 let apMeterValue = apMeterElement.value;
 let apText = document.getElementsByClassName('ap-text')[0];
 let apTextValue = apText.value;
+let disabledButton = 0;
 // let shroomHP = document.querySelector('hp-text').innerHTML;
 // let myAP = document.getElementById('ap-meter').innerHTML;
 const arcaneScepterStats = {
@@ -48,17 +49,19 @@ onReady();
 function arcaneScepterAttack(event) {
 	console.log('Arcane Scepter attack!');
 	if (myAP < arcaneScepterStats.apCost) {
+        document.getElementById('arcaneScepter').disabled = true;
+        disabledButton ++;
 		console.log('Not enough AP!');
 	} else if (myAP >= arcaneScepterStats.apCost) {
 		myAP -= arcaneScepterStats.apCost;
 		hpMeterValue -= arcaneScepterStats.damage;
 		fungusHpValue -= arcaneScepterStats.damage;
-
+        apMeterValue -= arcaneScepterStats.damage;
 		hpMeterElement.value = hpMeterValue;
-
 		fungusDomHp.innerHTML = fungusHpValue;
-
-		apText.innerHTML = myAP;
+        apMeterElement.innerHTML = myAP;
+        apText.innerHTML = myAP;
+        apMeterValue = myAP;
 
 		console.log(
 			'You dealt 14 damage with your scepter. Enemy has',
@@ -74,6 +77,8 @@ function arcaneScepterAttack(event) {
 function entangleAttack(event) {
 	console.log('Entangling action!');
 	if (myAP < entangleStats.apCost) {
+            document.getElementById('entangle').disabled = true;
+            disabledButton ++;
 		console.log('Not enough AP!');
 	} else if (myAP >= entangleStats.apCost) {
 		myAP -= entangleStats.apCost;
@@ -99,6 +104,8 @@ function entangleAttack(event) {
 function dragonBladeAttack(event) {
 	console.log('Attacked with the Dragon Blade!');
 	if (myAP < dragonBladeStats.apCost) {
+        disabledButton ++;
+        document.getElementById('dragonBlade').disabled = true;
 		console.log('Not enough AP!');
 	} else if (myAP >= dragonBladeStats.apCost) {
 		myAP -= dragonBladeStats.apCost;
@@ -122,34 +129,47 @@ function dragonBladeAttack(event) {
     outOfAp()
 }
 function starFireAttack(event) {
-	console.log('Launched Star Fire!');
-	if (myAP < starFireStats.apCost) {
-		console.log('Not enough AP!');
-	} else if (myAP >= starFireStats.apCost) {
-		myAP -= starFireStats.apCost;
-		hpMeterValue -= starFireStats.damage;
-		fungusHpValue -= starFireStats.damage;
+    console.log('Launched Star Fire!');
+    if (myAP < starFireStats.apCost) {
+        disabledButton ++;
+        document.getElementById('starFire').disabled = true;
+        console.log('Not enough AP!');
+    } else if (myAP >= starFireStats.apCost) {
+        myAP -= starFireStats.apCost;
+        hpMeterValue -= starFireStats.damage;
+        fungusHpValue -= starFireStats.damage;
+        
+        // Ensure health doesn't go below 0
+        if (hpMeterValue < 0) {
+            hpMeterElement.value = 0;
+            fungusDomHp.innerHTML = 0;
+        } else {
+            hpMeterElement.value = hpMeterValue;
+            fungusDomHp.innerHTML = fungusHpValue;
+        }
 
-		hpMeterElement.value = hpMeterValue;
+        // Update AP text
+        apText.innerHTML = myAP;
 
-		fungusDomHp.innerHTML = fungusHpValue;
+        console.log(
+            'You unleashed Star Fire! Enemy has',
+            hpMeterValue,
+            'remaining. You have',
+            myAP,
+            'attack points remaining'
+        );
 
-		apText.innerHTML = myAP;
-
-		console.log(
-			'You swing the Dragon Blade overhead! Enemy receives 47 damage. Enemy has',
-			hpMeterValue,
-			' left. You have',
-			myAP,
-			'attack points remaining'
-		);
-	} enemyDefeated()
-    outOfAp()
+        // Call functions to handle special cases
+        enemyDefeated();
+        outOfAp();
+    }
 }
 
 function enemyDefeated() {
     let fungusElement = document.querySelector('.freaky-fungus');
     if (fungusHpValue <= 0){
+        fungusHpValue = 0;
+        fungusElement.innerHTML = 0;
         fungusElement.classList.remove('walk');
         fungusElement.classList.add('dead');
         console.log('You have slain the monster! Congratulations!')
@@ -158,11 +178,9 @@ function enemyDefeated() {
 
 function outOfAp() {
     let fungusElement = document.querySelector('.freaky-fungus');
-    let disableButton = document.querySelector('attack-btn');
-    if (myAP <= 0){
+    if (myAP < 8 || disabledButton === 4){
         fungusElement.classList.remove('walk');
-        fungusElement.classList.add('jump');
-        disableButton.classList.add('disabled')
+        fungusElement.classList.add('jump');        
         console.log('Sadly you have failed, humanity suffers greatly');
     }
 }
